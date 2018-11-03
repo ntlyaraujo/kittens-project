@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css?family=Fredoka+One');
+@font-face {
+  font-family: 'Cheri Liney';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Cheri Liney'), url('CHERL___.woff') format('woff');
+}
+h1{
+  font-family: 'Cheri Liney';
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Fredoka One', cursive;
+  background: linear-gradient(to right, #ff9472, #f2709c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+
+}
