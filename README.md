@@ -3,5 +3,7 @@
 
 # Instructions
 yarn install
+
 yarn start
-be happy 
+
+be happy 😍
