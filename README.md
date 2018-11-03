@@ -1,5 +1,5 @@
 # 🐱 Kitties Friends 🐱
-💖 A cutie project for study purposes.
+A cutie project for study purposes.
 
 # Instructions
 yarn install
