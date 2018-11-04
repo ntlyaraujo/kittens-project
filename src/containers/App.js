@@ -1,37 +1,44 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Cardlist from '../components/Cardlist';
 import SearchBox from '../components/SearchBox';
 import Scroll from '../components/Scroll';
 import ErrorBoundary from '../components/ErrorBoundary'
 import './App.css';
 
+import { setSearchField, requestKitties } from '../action';
+
+const mapStateToProps = state => ({
+  searchField: state.searchKitties.searchField,
+  kitties: state.requestKitties.kitties,
+  isPending: state.requestKitties.isPending,
+  error: state.requestKitties.error,
+})
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
+    onRequestKitties: () => dispatch(requestKitties()),
+  }
+}
+
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      kitties: [],
-      searchfield: '',
-    }
-  }
+  
   componentDidMount() {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then(response => response.json())
-      .then(users => this.setState({ kitties: users }));
+    this.props.onRequestKitties();
   }
-  onSearchChange = (event) => {
-    this.setState({ searchfield: event.target.value });
-  }
+
   render() {
-    const { kitties, searchfield } = this.state;
+    const {searchField, onSearchChange, kitties, isPending} = this.props;
     const filteredKitties = kitties.filter(kitty => {
-      return kitty.name.toLowerCase().includes(searchfield.toLowerCase());
+      return kitty.name.toLowerCase().includes(searchField.toLowerCase());
     });
-    return (!kitties.length) ?
+    return isPending ?
       <h1 className="tc f1 washed-red">Loading</h1> :
       (
         <div className="tc">
           <h1 className="f1 washed-red">Kitties Friends</h1>
-          <SearchBox searchChange={this.onSearchChange} />
+          <SearchBox searchChange={onSearchChange} />
           <Scroll>
             <ErrorBoundary>
               <Cardlist kitties={filteredKitties} />
@@ -42,5 +49,5 @@ class App extends Component {
 
   }
 }
-
-export default App;
+//Connects a React component to a Redux store.
+export default connect(mapStateToProps, mapDispatchToProps)(App);
